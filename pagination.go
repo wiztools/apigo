@@ -21,7 +21,7 @@ func NewPaginationQuerier(defaultPage *Page) *PaginationQuerier {
 	}
 }
 
-func (o *PaginationQuerier) PageGet(queryable Query) *Page {
+func (o *PaginationQuerier) GetPage(queryable Query) *Page {
 	page, err := strconv.Atoi(queryable.Query("page"))
 	if err != nil {
 		return o.DefaultPage
