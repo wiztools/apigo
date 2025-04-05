@@ -7,7 +7,7 @@ import (
 )
 
 func TestIs(t *testing.T) {
-	err := &ApiErr{
+	err := &Err{
 		Code:  http.StatusNotFound,
 		Cause: "404",
 	}
@@ -20,19 +20,19 @@ func TestIs(t *testing.T) {
 }
 
 func TestErrorsIs(t *testing.T) {
-	err := &ApiErr{
+	err := &Err{
 		Code:  http.StatusNotFound,
 		Cause: "404",
 	}
 	if errors.Is(err, errors.New("fail")) {
 		t.Fail()
 	}
-	if errors.Is(err, &ApiErr{
+	if errors.Is(err, &Err{
 		Code: http.StatusConflict,
 	}) {
 		t.Fail()
 	}
-	if !errors.Is(err, &ApiErr{
+	if !errors.Is(err, &Err{
 		Code: http.StatusNotFound,
 	}) {
 		t.Fail()

@@ -6,29 +6,29 @@ import (
 	"net/http"
 )
 
-type ApiErr struct {
+type Err struct {
 	Code  int
 	Cause string
 	Err   error
 }
 
-func (o *ApiErr) Is(target error) bool {
-	if t, ok := target.(*ApiErr); ok {
+func (o *Err) Is(target error) bool {
+	if t, ok := target.(*Err); ok {
 		return t.Code == o.Code
 	}
 	return false
 }
 
-func (o *ApiErr) Unwrap() error {
+func (o *Err) Unwrap() error {
 	return o.Err
 }
 
-func (o *ApiErr) Error() string {
+func (o *Err) Error() string {
 	return fmt.Sprintf("%d; %s", o.Code, o.Cause)
 }
 
 func errIs(err error, httpStatus int) bool {
-	var webErr *ApiErr
+	var webErr *Err
 	if errors.As(err, &webErr) {
 		if webErr.Code == httpStatus {
 			return true
@@ -43,8 +43,8 @@ func ErrIsBadRequest(err error) bool {
 	return errIs(err, http.StatusBadRequest)
 }
 
-func ErrBadRequest(cause string) *ApiErr {
-	return &ApiErr{
+func ErrBadRequest(cause string) *Err {
+	return &Err{
 		Code:  http.StatusBadRequest,
 		Cause: cause,
 	}
@@ -56,8 +56,8 @@ func ErrIsNotFound(err error) bool {
 	return errIs(err, http.StatusNotFound)
 }
 
-func ErrNotFound(cause string) *ApiErr {
-	return &ApiErr{
+func ErrNotFound(cause string) *Err {
+	return &Err{
 		Code:  http.StatusNotFound,
 		Cause: cause,
 	}
@@ -69,8 +69,8 @@ func ErrIsConflict(err error) bool {
 	return errIs(err, http.StatusConflict)
 }
 
-func ErrConflict(cause string) *ApiErr {
-	return &ApiErr{
+func ErrConflict(cause string) *Err {
+	return &Err{
 		Code:  http.StatusConflict,
 		Cause: cause,
 	}
@@ -82,8 +82,8 @@ func ErrIsUnprocessableEntity(err error) bool {
 	return errIs(err, http.StatusUnprocessableEntity)
 }
 
-func ErrUnprocessableEntity(cause string) *ApiErr {
-	return &ApiErr{
+func ErrUnprocessableEntity(cause string) *Err {
+	return &Err{
 		Code:  http.StatusUnprocessableEntity,
 		Cause: cause,
 	}
@@ -95,8 +95,8 @@ func ErrIsTooManyRequests(err error) bool {
 	return errIs(err, http.StatusTooManyRequests)
 }
 
-func ErrTooManyRequests(cause string) *ApiErr {
-	return &ApiErr{
+func ErrTooManyRequests(cause string) *Err {
+	return &Err{
 		Code:  http.StatusTooManyRequests,
 		Cause: cause,
 	}
@@ -108,8 +108,8 @@ func ErrIsUnauthorized(err error) bool {
 	return errIs(err, http.StatusUnauthorized)
 }
 
-func ErrUnauthorized(cause string) *ApiErr {
-	return &ApiErr{
+func ErrUnauthorized(cause string) *Err {
+	return &Err{
 		Code:  http.StatusUnauthorized,
 		Cause: cause,
 	}
@@ -121,8 +121,8 @@ func ErrIsForbidden(err error) bool {
 	return errIs(err, http.StatusForbidden)
 }
 
-func ErrForbidden(cause string) *ApiErr {
-	return &ApiErr{
+func ErrForbidden(cause string) *Err {
+	return &Err{
 		Code:  http.StatusForbidden,
 		Cause: cause,
 	}

@@ -3,7 +3,7 @@ package apigo
 import "errors"
 
 func RespCauseErr(cause error) map[string]any {
-	var webErr *ApiErr
+	var webErr *Err
 	if errors.As(cause, &webErr) {
 		return map[string]any{
 			"cause": webErr.Cause,
