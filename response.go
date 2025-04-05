@@ -26,9 +26,21 @@ func RespID(id int64) map[string]int64 {
 	}
 }
 
+func RespRowsAffected(rowsAff int64) map[string]int64 {
+	return map[string]int64{
+		"rows-affected": rowsAff,
+	}
+}
+
 func RespIDName(id int64, name string) map[string]any {
 	return map[string]any{
 		"id":   id,
 		"name": name,
+	}
+}
+
+func RespValue(val any) map[string]any {
+	return map[string]any{
+		"value": val,
 	}
 }
