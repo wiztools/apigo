@@ -20,14 +20,14 @@ func RespCause(cause string) map[string]any {
 	}
 }
 
-func RespID(id int64) map[string]int64 {
-	return map[string]int64{
+func RespID(id int64) map[string]any {
+	return map[string]any{
 		"id": id,
 	}
 }
 
-func RespRowsAffected(rowsAff int64) map[string]int64 {
-	return map[string]int64{
+func RespRowsAffected(rowsAff int64) map[string]any {
+	return map[string]any{
 		"rows-affected": rowsAff,
 	}
 }
