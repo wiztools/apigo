@@ -2,6 +2,27 @@ package apigo
 
 import "errors"
 
+type ModelID struct {
+	ID int64 `json:"id" format:"int64"`
+}
+
+type ModelName struct {
+	Name string `json:"name" format:"string"`
+}
+
+type ModelIDName struct {
+	ID   int64  `json:"id" format:"int64"`
+	Name string `json:"name" format:"string"`
+}
+
+type ModelRowsAffected struct {
+	RowsAffected int64 `json:"rows-affected" format:"int64"`
+}
+
+type ModelValue struct {
+	Value any `json:"value"`
+}
+
 func RespCauseErr(cause error) map[string]any {
 	var webErr *Err
 	if errors.As(cause, &webErr) {
