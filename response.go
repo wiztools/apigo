@@ -16,7 +16,7 @@ type ModelIDName struct {
 }
 
 type ModelRowsAffected struct {
-	RowsAffected int64 `json:"rows-affected" format:"int64"`
+	RowsAffected int64 `json:"rows_affected" format:"int64"`
 }
 
 type ModelValue struct {
@@ -49,7 +49,7 @@ func RespID(id int64) map[string]any {
 
 func RespRowsAffected(rowsAff int64) map[string]any {
 	return map[string]any{
-		"rows-affected": rowsAff,
+		"rows_affected": rowsAff,
 	}
 }
 
