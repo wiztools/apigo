@@ -1,67 +1,43 @@
 package apigo
 
-import "errors"
+import (
+	"encoding/json"
+	"io"
+	"log"
+	"net/http"
+)
 
-type ModelID struct {
-	ID int64 `json:"id" format:"int64"`
+func LogResp(r *http.Response) {
+	LogRespErr(r, nil)
 }
 
-type ModelName struct {
-	Name string `json:"name" format:"string"`
-}
-
-type ModelIDName struct {
-	ID   int64  `json:"id" format:"int64"`
-	Name string `json:"name" format:"string"`
-}
-
-type ModelRowsAffected struct {
-	RowsAffected int64 `json:"rows_affected" format:"int64"`
-}
-
-type ModelValue struct {
-	Value any `json:"value"`
-}
-
-func RespCauseErr(cause error) map[string]any {
-	var webErr *Err
-	if errors.As(cause, &webErr) {
-		return map[string]any{
-			"cause": webErr.Cause,
-		}
+func LogRespErr(r *http.Response, err error) {
+	if err == nil && r == nil {
+		return
 	}
-	return map[string]any{
-		"cause": cause,
+	if err != nil && r != nil {
+		log.Println("[api-resp-status-err]", r.Status, "|", err)
+	} else if err != nil && r == nil {
+		log.Println("[api-resp-err]", err)
+	} else if err == nil && r != nil {
+		log.Println("[api-resp-status]", r.Status)
 	}
+
+	// Body print:
+	if r == nil {
+		return
+	}
+	b, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	log.Println(string(b))
 }
 
-func RespCause(cause string) map[string]any {
-	return map[string]any{
-		"cause": cause,
+func BindResp(r *http.Response, v any) error {
+	if err := json.NewDecoder(r.Body).Decode(v); err != nil {
+		return err
 	}
-}
-
-func RespID(id int64) map[string]any {
-	return map[string]any{
-		"id": id,
-	}
-}
-
-func RespRowsAffected(rowsAff int64) map[string]any {
-	return map[string]any{
-		"rows_affected": rowsAff,
-	}
-}
-
-func RespIDName(id int64, name string) map[string]any {
-	return map[string]any{
-		"id":   id,
-		"name": name,
-	}
-}
-
-func RespValue(val any) map[string]any {
-	return map[string]any{
-		"value": val,
-	}
+	return nil
 }
