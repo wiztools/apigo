@@ -19,6 +19,10 @@ type ModelRowsAffected struct {
 	RowsAffected int64 `json:"rows_affected" format:"int64"`
 }
 
+type ModelEmail struct {
+	Email string `json:"email" format:"email"`
+}
+
 type ModelValue struct {
 	Value any `json:"value"`
 }
