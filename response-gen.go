@@ -7,12 +7,12 @@ type ModelID struct {
 }
 
 type ModelName struct {
-	Name string `json:"name" format:"string"`
+	Name string `json:"name"`
 }
 
 type ModelIDName struct {
 	ID   int64  `json:"id" format:"int64"`
-	Name string `json:"name" format:"string"`
+	Name string `json:"name"`
 }
 
 type ModelRowsAffected struct {
