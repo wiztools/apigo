@@ -23,8 +23,16 @@ type ModelEmail struct {
 	Email string `json:"email" format:"email"`
 }
 
+type ModelJobID struct {
+	JobID int64 `json:"job_id" format:"int64"`
+}
+
 type ModelValue struct {
 	Value any `json:"value"`
+}
+
+type ModelCause struct {
+	Cause string `json:"cause"`
 }
 
 func RespCauseErr(cause error) map[string]any {
