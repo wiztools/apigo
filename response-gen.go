@@ -31,6 +31,10 @@ type ModelValue struct {
 	Value any `json:"value"`
 }
 
+type ModelBoolValue struct {
+	Value bool `json:"value"`
+}
+
 type ModelCause struct {
 	Cause string `json:"cause"`
 }
