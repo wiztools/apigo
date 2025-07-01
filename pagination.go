@@ -7,8 +7,8 @@ type Query interface {
 }
 
 type Page struct {
-	Page int
-	Size int
+	Page int32
+	Size int32
 }
 
 type PaginationQuerier struct {
@@ -22,18 +22,18 @@ func NewPaginationQuerier(defaultPage *Page) *PaginationQuerier {
 }
 
 func (o *PaginationQuerier) GetPage(queryable Query) *Page {
-	page, err := strconv.Atoi(queryable.Query("page"))
+	page, err := strconv.ParseInt(queryable.Query("page"), 10, 32)
 	if err != nil {
 		return o.DefaultPage
 	}
-	size, err := strconv.Atoi(queryable.Query("size"))
+	size, err := strconv.ParseInt(queryable.Query("size"), 10, 32)
 	if err != nil {
 		return o.DefaultPage
 	}
-	return NewPage(page, size)
+	return NewPage(int32(page), int32(size))
 }
 
-func NewPage(page, size int) *Page {
+func NewPage(page, size int32) *Page {
 	return &Page{
 		Page: page,
 		Size: size,
