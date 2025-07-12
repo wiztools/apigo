@@ -1,6 +1,9 @@
 package apigo
 
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 type ModelID struct {
 	ID int64 `json:"id" format:"int64"`
@@ -25,6 +28,10 @@ type ModelEmail struct {
 
 type ModelJobID struct {
 	JobID int64 `json:"job_id" format:"int64"`
+}
+
+type ModelTime struct {
+	Time time.Time `json:"time" format:"date-time"`
 }
 
 type ModelValue struct {
