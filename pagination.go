@@ -1,10 +1,9 @@
 package apigo
 
-import "strconv"
-
-type Query interface {
-	Query(param string) string
-}
+import (
+	"net/url"
+	"strconv"
+)
 
 type Page struct {
 	Page int32
@@ -21,12 +20,12 @@ func NewPaginationQuerier(defaultPage *Page) *PaginationQuerier {
 	}
 }
 
-func (o *PaginationQuerier) GetPage(queryable Query) *Page {
-	page, err := strconv.ParseInt(queryable.Query("page"), 10, 32)
+func (o *PaginationQuerier) GetPage(qryVals url.Values) *Page {
+	page, err := strconv.ParseInt(qryVals.Get("page"), 10, 32)
 	if err != nil {
 		return o.DefaultPage
 	}
-	size, err := strconv.ParseInt(queryable.Query("size"), 10, 32)
+	size, err := strconv.ParseInt(qryVals.Get("size"), 10, 32)
 	if err != nil {
 		return o.DefaultPage
 	}
