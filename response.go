@@ -2,11 +2,12 @@ package apigo
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 )
 
-func BindResp(r *http.Response, v any) error {
-	if err := json.NewDecoder(r.Body).Decode(v); err != nil {
+func Bind(r io.ReadCloser, v any) error {
+	if err := json.NewDecoder(r).Decode(v); err != nil {
 		return err
 	}
 	return nil
